@@ -3,7 +3,7 @@ name: Daily Commit
 on:
   workflow_dispatch:
   schedule:
-    - cron: '0 0 * * *'  # Runs every day at midnight UTC
+    - cron: '0 0 * * *'  # Every day at midnight UTC
 
 jobs:
   commit:
@@ -23,7 +23,9 @@ jobs:
         echo "📅 Pinged on $(date -u)" >> activity.log
 
     - name: Commit changes
+      env:
+        GITHUB_TOKEN: ${{ secrets.PAT }}
       run: |
         git add activity.log
         git diff --cached --quiet && echo "No changes to commit" || git commit -m "📆 Daily activity ping"
-        git push
+        git push https://SriramBharath-7:${GITHUB_TOKEN}@github.com/SriramBharath-7/activity-pinger.git HEAD:main
