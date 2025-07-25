@@ -1,3 +1,10 @@
+<div align="center">
+  <img src="./imgs_gifs/cool_coder.gif" alt="Cool coder gif">
+</div>
+
+---
+
+
 # ⚡ activity-pinger
 
 > 🌀 A GitHub Action that commits a small update daily — used solely for **learning CI/CD**, **automation workflows**, and **maintaining personal activity**.
