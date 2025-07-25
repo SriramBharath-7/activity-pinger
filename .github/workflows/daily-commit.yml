@@ -3,23 +3,27 @@ name: Daily Commit
 on:
   workflow_dispatch:
   schedule:
-    - cron: '0 0 * * *'  # Runs every day at midnight UTC
+    - cron: '0 0 * * *'  # Every day at midnight UTC
 
 jobs:
   commit:
     runs-on: ubuntu-latest
+
     steps:
-      - name: Checkout repo
-        uses: actions/checkout@v4
+    - name: Checkout repository
+      uses: actions/checkout@v3
 
-      - name: Configure Git
-        run: |
-          git config user.name "SriramBharath-7"
-          git config user.email "41898282+SriramBharath-7@users.noreply.github.com"
+    - name: Set Git user
+      run: |
+        git config --global user.name "SriramBharath-7"
+        git config --global user.email "41898282+SriramBharath-7@users.noreply.github.com"
 
-      - name: Make dummy commit
-        run: |
-          date >> activity.log
-          git add activity.log
-          git commit -m "📅 Daily ping: $(date)"
-          git push
+    - name: Create or update activity log
+      run: |
+        echo "✅ Pinged on $(date)" >> activity.log
+
+    - name: Commit changes
+      run: |
+        git add activity.log
+        git commit -m "📅 Daily activity ping" || echo "No changes to commit"
+        git push
