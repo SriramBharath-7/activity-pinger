@@ -1,26 +1,25 @@
 name: Daily Commit
 
 on:
+  workflow_dispatch:
   schedule:
-    - cron: '0 0 * * *'  # Runs daily at 00:00 UTC
-  workflow_dispatch:      # Allows manual trigger
+    - cron: '0 0 * * *'  # Runs every day at midnight UTC
 
 jobs:
   commit:
     runs-on: ubuntu-latest
-
     steps:
       - name: Checkout repo
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
-      - name: Make a change
-        run: |
-          echo "// Pinged at $(date)" >> log.txt
-
-      - name: Commit & push
+      - name: Configure Git
         run: |
           git config user.name "SriramBharath-7"
-          git config user.email "srirambharath7@gmail.com"
-          git add .
-          git commit -m "💥 Daily contribution ping"
+          git config user.email "41898282+SriramBharath-7@users.noreply.github.com"
+
+      - name: Make dummy commit
+        run: |
+          date >> activity.log
+          git add activity.log
+          git commit -m "📅 Daily ping: $(date)"
           git push
