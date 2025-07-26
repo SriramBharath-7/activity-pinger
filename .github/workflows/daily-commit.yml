@@ -25,3 +25,6 @@ jobs:
           git add activity.log
           git diff --cached --quiet && echo "No changes to commit" || git commit -m "📆 Daily activity ping"
           git push https://SriramBharath-7:${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}@github.com/SriramBharath-7/activity-pinger.git HEAD:main
+
+- name: Show timestamp
+  run: date
