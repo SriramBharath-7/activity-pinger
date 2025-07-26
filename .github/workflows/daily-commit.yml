@@ -1,31 +1,27 @@
-name: Daily Commit
+name: 📆 Daily Commit Ping
 
 on:
-  workflow_dispatch:
   schedule:
-    - cron: '0 0 * * *'  # Every day at midnight UTC
+    - cron: '0 0 * * *'  # Runs daily at midnight UTC
+  workflow_dispatch:      # Allows manual run from GitHub UI
 
 jobs:
-  commit:
+  ping:
     runs-on: ubuntu-latest
 
     steps:
-    - name: Checkout repository
-      uses: actions/checkout@v3
+      - name: Checkout repo
+        uses: actions/checkout@v3
 
-    - name: Set Git Identity
-      run: |
-        git config --global user.name "SriramBharath-7"
-        git config --global user.email "41898282+SriramBharath-7@users.noreply.github.com"
+      - name: Update activity log
+        run: echo "Ping at $(date)" >> activity.log
 
-    - name: Update activity log
-      run: |
-        echo "📅 Pinged on $(date -u)" >> activity.log
-
-    - name: Commit changes
-      env:
-        GITHUB_TOKEN: ${{ secrets.PAT }}
-      run: |
-        git add activity.log
-        git diff --cached --quiet && echo "No changes to commit" || git commit -m "📆 Daily activity ping"
-        git push https://SriramBharath-7:${GITHUB_TOKEN}@github.com/SriramBharath-7/activity-pinger.git HEAD:main
+      - name: Commit changes
+        env:
+          GITHUB_TOKEN: ${{ secrets.PAT }}  # Uses your secret token
+        run: |
+          git config user.name "Sriram Bharath"
+          git config user.email "srirambharath7@gmail.com"
+          git add activity.log
+          git diff --cached --quiet && echo "No changes to commit" || git commit -m "📆 Daily activity ping"
+          git push https://SriramBharath-7:${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}@github.com/SriramBharath-7/activity-pinger.git HEAD:main
