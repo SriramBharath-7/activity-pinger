@@ -2,8 +2,8 @@ name: 📆 Daily Commit Ping
 
 on:
   schedule:
-    - cron: '0 0 * * *'  # Runs daily at midnight UTC
-  workflow_dispatch:      # Allows manual run from GitHub UI
+    - cron: '0 0 * * *'  # Runs every day at midnight UTC
+  workflow_dispatch:       # Allows manual trigger
 
 jobs:
   ping:
@@ -18,13 +18,15 @@ jobs:
 
       - name: Commit changes
         env:
-          GITHUB_TOKEN: ${{ secrets.PAT }}  # Uses your secret token
+          GITHUB_TOKEN: ${{ secrets.PAT }}
         run: |
           git config user.name "Sriram Bharath"
           git config user.email "srirambharath7@gmail.com"
           git add activity.log
           git diff --cached --quiet && echo "No changes to commit" || git commit -m "📆 Daily activity ping"
-          git push https://SriramBharath-7:${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}@github.com/SriramBharath-7/activity-pinger.git HEAD:main
+          git push https://SriramBharath-7:${GITHUB_TOKEN}@github.com/SriramBharath-7/activity-pinger.git HEAD:main
+
+
 
 - name: Show timestamp
   run: date
